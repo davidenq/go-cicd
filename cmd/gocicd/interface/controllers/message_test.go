@@ -1,32 +1,40 @@
 package controllers
 
 import (
+	"bytes"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
-	"reflect"
-	"strings"
 	"testing"
 
-	"github.com/davidenq/go-cicd/cmd/gocicd/types"
+	"github.com/gin-gonic/gin"
 )
 
 func TestHandlerReturnsStringTypeOfData(t *testing.T) {
 	t.Run("should return: Hello Juan Perez your message will be send", func(t *testing.T) {
+		gin.SetMode(gin.TestMode)
+
 		res := httptest.NewRecorder()
-		data := &types.BodyMessage{
-			Message:       "This is a test",
-			To:            "Juan Perez",
-			From:          "Rita Asturia",
-			TimeToLifeSec: 45,
+		c, _ := gin.CreateTestContext(res)
+
+		data := map[string]interface{}{
+			"message":       "This is a test",
+			"to":            "Juan Perez",
+			"from":          "Rita Asturia",
+			"timeToLifeSec": 45,
 		}
 		dataBytes, _ := json.Marshal(data)
-		req, _ := http.NewRequest("POST", "http://localhost:4000/DevOps", strings.NewReader(string(dataBytes)))
-		Handler(res, req)
-		var want string
+
+		c.Request = &http.Request{
+			Body: ioutil.NopCloser(bytes.NewBuffer(dataBytes)),
+		}
+		Handler(c)
+
+		want := "Hello Juan Perez your message will be send"
 		got, _ := ioutil.ReadAll(res.Body)
-		if reflect.TypeOf(string(got)) != reflect.TypeOf(want) {
+
+		if string(got) != want {
 			t.Errorf("got '%s' expected '%s", got, want)
 		}
 	})
