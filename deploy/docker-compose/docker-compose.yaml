@@ -1,0 +1,13 @@
+version: '3'
+services:
+  gocicd:
+    container_name: gocicd
+    privileged: true
+    build:
+      context: .
+      dockerfile: ./build/package/docker/Dockerfile
+    environment:
+      - PORT=${PORT}
+      - ENVIRONMENT=${ENVIRONMENT}
+    ports:
+      - '0.0.0.0:${PORT}:${PORT}'
