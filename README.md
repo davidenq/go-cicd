@@ -1,5 +1,7 @@
 # Go CI/CD
 
+[![Build Status](https://travis-ci.org/davidenq/go-cicd.svg?branch=master)](https://travis-ci.org/davidenq/go-cicd)
+[![Coverage Status](https://coveralls.io/repos/github/davidenq/go-cicd/badge.svg?branch=master)](https://coveralls.io/github/davidenq/go-cicd?branch=master)
 
 This projects aims to show not only a process for CI/CD but also, to write code following clean code, TDD, branching strategy, versioning and so on.
 On the other hand, the folder structure follows the definition specified [here](https://github.com/golang-standards/project-layout). But it's not a standardized folder structure. However, big projects such as Kubernetes, Prometheus, and others, follow that folder structure.
