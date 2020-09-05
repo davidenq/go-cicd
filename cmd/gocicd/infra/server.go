@@ -14,6 +14,7 @@ func NewServer() error {
 
 	unAuthorizedRoutes := r.Group("/")
 	unAuthorizedRoutes.GET("/health", controllers.Health)
+	unAuthorizedRoutes.GET("/", controllers.Health)
 
 	authorizedRoutes := r.Group("/DevOps")
 	authorizedRoutes.Use(middleware.CheckAPIKEY())
