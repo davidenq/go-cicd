@@ -3,6 +3,21 @@
 [![Build Status](https://travis-ci.org/davidenq/go-cicd.svg?branch=master)](https://travis-ci.org/davidenq/go-cicd)
 [![Coverage Status](https://coveralls.io/repos/github/davidenq/go-cicd/badge.svg?branch=master)](https://coveralls.io/github/davidenq/go-cicd?branch=master)
 
+
+# Checklist
+- [x] unit testing with TDD
+- [x] integration testing
+- [x] end to end testing
+- [x] pipeline ci/cd using Travis-ci service (automatic deployment in different stages specified at .travis.yml file)
+- [x] deploy on local and cloud (google cloud run) (support docker-compose, google cloud run and google kubernetes engine)
+- [x] branching strategy based on Github Flow (Master for production, other branchs for development/staging)
+- [x] semantic versioning with git tags
+- [x] Infraestructure as a code with terraform and bash scripting for createing cluster on Kubernetes
+- [x] deploy docker containers on Google Kubernetes Engine through yaml files, kubectl and bash scripting
+- [x] Handle scripts as a centralized way through Makefile
+- [x] created a load balancer on Google Kubernetes Engine with 2 microservices
+- [x] Published Docker containers on Google Registry
+
 This projects aims to show not only a process for CI/CD but also, to write code following clean code, TDD, branching strategy, versioning and so on.
 On the other hand, the folder structure follows the definition specified [here](https://github.com/golang-standards/project-layout). But it's not a standardized folder structure. However, big projects such as Kubernetes, Prometheus, and others, follow that folder structure.
 
@@ -18,6 +33,62 @@ On the other hand, the folder structure follows the definition specified [here](
 3. Semver for versioning
   - It's important to generate a release only when you consider that the implementation could be completed to be tested.
 
+# Folder structure
+```
+├── .vscode /
+├── build /
+│   ├── ci /
+│   ├── package /
+│   │   ├── docker/
+│   │   │   ├── Dockerfile
+├── cmd /
+│   ├── domain /
+│   ├── infra /
+│   ├── interface /
+│   ├── middleware /
+│   ├── types /
+│   ├── .env.example
+│   ├── index.go
+├── deploy /
+│   ├── docker-compose /
+│   ├── gcr /
+│   ├── gke /
+├── iaac /
+│   ├── terraform /
+│   │   ├── gke /
+│   │   │   ├── cluster.tf
+│   │   │   ├── cluster.tfvars.example
+│   │   │   ├── variables.tf
+├── scripts /
+├── tests /
+├── .dockerignore /
+├── .gitignore /
+├── .travis.yml /
+├── .account.json.enc /
+├── go.mod /
+├── go.sum /
+├── Makefile /
+├── README.md /
+│   ├── empty /
+│   ├── nested /
+│   │   ├── nested-a/
+│   │   │   ├── a1/
+│   │   │   │   ├── empty.js
+│   │   │   ├── a2/
+│   │   │   │   ├── a21/
+│   │   │   │   │   ├── a211/
+│   │   │   │   │   │   ├── empty.js
+│   │   │   │   │   │   ├── example.js
+│   │   ├── nested-b/
+│   │   │   ├── b1/
+│   │   │   │   ├── b11/
+│   │   │   │   │   ├── empty.js
+│   │   │   │   │   ├── empty.json
+│   │   │   │   ├── empty.js
+├── index.js
+```
+
+
 # To start running testing
 
 For running unit testing:
@@ -32,6 +103,7 @@ For running unit testing:
 - `ruby for travis cli`
 - `go > 1.12` if you want to develop without Docker
 - `brew install goreleaser`
+- `terraform`
 
 ### install travis
 ```bash

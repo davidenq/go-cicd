@@ -16,3 +16,6 @@
 
 account.json
 .DS_Store
+*.tfvars
+terraform.tfstate*
+*.terraform
