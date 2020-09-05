@@ -120,48 +120,26 @@ kubectly apply -f ./deploy/gke/ingress/service.yaml
 2. GitHubFlow as the strategy Branching
   - Github Flow could be used in the first instance and only for test purposes in order to understand in a better way this strategy branching.
 3. Semver for versioning
-  - It's important to generate a release only when you consider that the implementation could be completed to be tested.
+  - It is important to generate a release only when you consider that the implementation could be completed to be tested.
 
 # Folder structure
+The folder structure is based-on [golang-layoud](https://github.com/golang-standards/project-layout). This is not an official folder structure, but it is based-on the biggest projects such as Kubernetes.
 
-```
-├── .vscode /
-├── build /
-│   ├── ci /
-│   ├── package /
-│   │   ├── docker/
-│   │   │   ├── Dockerfile
-├── cmd /
-│   ├── domain /
-│   ├── infra /
-│   ├── interface /
-│   ├── middleware /
-│   ├── types /
-│   ├── .env.example
-│   ├── index.go
-├── deploy /
-│   ├── docker-compose /
-│   ├── gcr /
-│   ├── gke /
-├── iaac /
-│   ├── terraform /
-│   │   ├── gke /
-│   │   │   ├── cluster.tf
-│   │   │   ├── cluster.tfvars.example
-│   │   │   ├── variables.tf
-├── scripts /
-├── tests /
-├── .dockerignore
-├── .gitignore
-├── .travis.yml
-├── .account.json.enc
-├── go.mod
-├── go.sum
-├── Makefile
-├── README.md
-
-```
-
+- `build` folder contains files for building the application: For instance, as a binary, inside in a Docker Container an so on. Currently, Dockerfile is supported to build the server application on Docker.
+- `cmd` contains the service applications called `gocicd` for this project. `gocicd` internally has a similarly folder structure of the clean architecture folder modularization but it not be implemented any pattern.
+- `deploy` contains multiple definitions for deploy `gocicd` application not only in local with docker-compose, but also on cloud using Google Cloud Run and Google Kubernetes Engine.
+   - `docker-compose` contains the definition in the YAML file
+   - `gcr` contains a bash script to execute gcloud command to deploy on Google Cloud Run
+   - `gke` contains multiple YAML files for create the workloads on Google Kubernetes Engine. There are 3 folders that contain:
+     - `configmap.yaml` for creating the basic configuration with environment variables needed for the deployment.
+     - `deployment.yaml` is used to create the deployment (multiples containers) for the `gocicd` application.
+     - `service.yaml` is used to expose the deployment internally on Kubernetes
+     ingress folder contains a `service.yaml` definition for creating a unique load balancer as a entrypoint for `servicea` and `serviceb` deployments
+    > note: each service is created through bash scripting using: `make gke service=[SERVICE_NAME]`
+- `iaac` contains tools to create infraestructure as a code. Terraform is used to create the cluster on Google Kubernetes Engine.
+- `scripts`folder is a centralized folder for creating all scripts for creating deployments, builds, iaacs, and so on.
+- `tests` folder contains end to end testing. It is used after create a deployment on Google Cloud Run in order to test the whole application.
+- `account.json.enc` is an encrypted file that contains the json auth account to login into Google. Just travis can be decrypt this file in the process of CI/CD.
 
 # To start running testing
 
