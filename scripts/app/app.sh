@@ -5,7 +5,7 @@ then
   ENVIRONMENT=develop go run ./cmd/gocicd/index.go
 elif [ "$ACTION" == "test" ];
 then
-  go test -cover ./...
+  go test -cover ./cmd/gocicd/domain ./cmd/gocicd/infra ./cmd/gocicd/interface/controllers
 elif [ "$ACTION" == "unit-test" ];
 then
   go test -cover ./cmd/gocicd/domain
