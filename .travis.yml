@@ -18,7 +18,7 @@ before_install:
 # add coverage report
 - go get github.com/mattn/goveralls
 # build docker image
-- make docker action=build
+- docker build  --file=./build/package/docker/Dockerfile --compress --force-rm --rm --tag  ${CONTAINER_TAG}:${TRAVIS_COMMIT} .
 # install google sdk
 - if [ ! -d $HOME/google-cloud-sdk/bin ]; then rm -rf $HOME/google-cloud-sdk; curl
   https://sdk.cloud.google.com | bash > /dev/null; fi
