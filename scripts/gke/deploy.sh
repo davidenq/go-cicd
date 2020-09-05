@@ -21,4 +21,4 @@ else
 
   # service
   kubectl apply -f ./deploy/gke/${SERVICE}/service.yaml
-if
+fi
