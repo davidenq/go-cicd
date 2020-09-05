@@ -110,6 +110,7 @@ To expose those service, you need to create a ingress. You can execut the below 
 
 ```bash
 kubectly apply -f ./deploy/gke/ingress/service.yaml
+````
 
 # Guidelines
 
