@@ -12,7 +12,7 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_df2253688184_key -iv $encrypted_df2253688184_iv
   -in account.json.enc -out account.json -d
 # running unit and integration tests
-- make app action=test
+- go test --cover ./...
 # add coverage report
 - go get github.com/mattn/goveralls
 # build docker image
