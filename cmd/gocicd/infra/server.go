@@ -3,6 +3,7 @@ package infra
 import (
 	"github.com/davidenq/go-cicd/cmd/gocicd/infra/config"
 	"github.com/davidenq/go-cicd/cmd/gocicd/interface/controllers"
+	"github.com/davidenq/go-cicd/cmd/gocicd/middleware"
 	"github.com/gin-gonic/gin"
 )
 
@@ -10,8 +11,14 @@ import (
 func NewServer() error {
 
 	r := gin.Default()
-	r.GET("/health", controllers.Health)
-	r.POST("/DevOps", controllers.Handler)
+
+	unAuthorizedRoutes := r.Group("/")
+	unAuthorizedRoutes.GET("/health", controllers.Health)
+
+	authorizedRoutes := r.Group("/DevOps")
+	authorizedRoutes.Use(middleware.CheckAPIKEY())
+	authorizedRoutes.Use(middleware.CheckUnAuthorizedMethods())
+	authorizedRoutes.Any("/", controllers.Handler)
 
 	err := r.Run(":" + config.PORT)
 	if err != nil {
