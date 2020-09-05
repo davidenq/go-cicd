@@ -123,6 +123,7 @@ kubectly apply -f ./deploy/gke/ingress/service.yaml
   - It's important to generate a release only when you consider that the implementation could be completed to be tested.
 
 # Folder structure
+
 ```
 ├── .vscode /
 ├── build /
@@ -158,6 +159,7 @@ kubectly apply -f ./deploy/gke/ingress/service.yaml
 ├── go.sum
 ├── Makefile
 ├── README.md
+
 ```
 
 
