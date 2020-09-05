@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servicea
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: servicea
+  template:
+    metadata:
+      labels:
+        app: servicea
+    spec:
+      containers:
+      - envFrom:
+          - configMapRef:
+              name: servicea-config
+        image: gcr.io/devops-flow-testing/go-cicd:REVISION_ID
+        name: servicea

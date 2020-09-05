@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: serviceb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: serviceb
+  template:
+    metadata:
+      labels:
+        app: serviceb
+    spec:
+      containers:
+      - envFrom:
+          - configMapRef:
+              name: serviceb-config
+        image: gcr.io/devops-flow-testing/go-cicd:REVISION_ID
+        name: serviceb
