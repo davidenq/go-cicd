@@ -38,7 +38,7 @@ endif
 docker:
 ifndef action
 	@echo ${COLOR_RED}"Error: You must define the action (a) as follows: make docker action=[action]"
-	@echo ${COLOR_BLUE}"[action]: run, test, unit-test, integration-test, e2e-test"
+	@echo ${COLOR_BLUE}"[action]: build, run"
 	@echo ${COLOR_GREEN}"	     build: build a Docker container"
 	@echo ${COLOR_GREEN}"	     run: start the gocicd server on Docker" ${COLOR_YELLOW}"(If you want to use docker-compose to start the app, run: make docker-compose action=up)"${COLOR_NC}
 else

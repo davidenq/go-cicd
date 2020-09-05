@@ -17,10 +17,99 @@
 - [x] Handle scripts as a centralized way through Makefile
 - [x] created a load balancer on Google Kubernetes Engine with 2 microservices
 - [x] Published Docker containers on Google Registry
+- [x] Code coverage using Coveralls service
 
 This projects aims to show not only a process for CI/CD but also, to write code following clean code, TDD, branching strategy, versioning and so on.
 On the other hand, the folder structure follows the definition specified [here](https://github.com/golang-standards/project-layout). But it's not a standardized folder structure. However, big projects such as Kubernetes, Prometheus, and others, follow that folder structure.
 
+# List of Commands
+The current implementation has a Makefile as a centralized handler of bash scripting. So for that reason, it's important to know what commands you can run
+
+## app command
+The app command are used to work without Docker
+### Testing 
+Running unit and integration tests
+```bash
+$make app action=test
+```
+Running unit test
+```bash
+$make app action=unit-test
+```
+
+Running unit integration-test
+```bash
+$make app action=integration-test
+```
+
+To perform end-to-end testing, you must first run the application
+```bash
+$make app action=run
+```
+```bash
+$make app action=e2e-test
+```
+###  Running the app
+
+```bash
+$make app action=run
+```
+
+## docker command
+
+docker command allows you to work based-on Docker.
+
+### Running the app
+
+In order to work with Docker, you must first build de Docker image.
+```bash
+$make docker action=build
+```
+```bash
+$make docker action=app
+```
+
+## docker-compose command
+
+docker-compose command just has two actions: up and down. The first one will build the Docker image and after that, will  run the application. The second one, will turn off the Docker container.
+```bash
+$make docker-compose action=up
+```
+```bash
+$make docker-compose action=down
+```
+
+## travis command
+Travis commands through make, are used for logging and for creating encrypt variables. Although those commands are not difficult to use, at first instance, those were added having in mind a ease way to use travis commands, but is a better option running Travis directly with its CLI. `make travis commands` will be deprecated for the next release.
+
+## gcr command
+gcr command is used to deploy the Docker container on Google Cloud Run. It command is called by the Travis-CI service. You can not do anything in local with this command because there are environmental variables gotten from travis environment variables.
+
+## infra command
+
+infra command is used to create a cluster on Google Kubernetes Engine. Terraform is used for providing this funcionality. This command is used only in local. For that reason, it's important that you can install gcloud CLI in your local machine, set the project of Google and provide credentials for authentication and authorization. This command doesn't provide you that funcionality (authentication and authorization).
+
+For create a cluster:
+```bash
+$make infra
+```
+It's important to set all environment variables  on `./iaac/terraform/gke/cluster.tfvars`. You can get and example at `./iaac/terraform/gke/cluster.tfvars.example`.
+For security, `cluster.tfvars` is ignoreg for git.
+
+## gke command
+gke command is used to create the workloads on the cluster previously created. Bash scripting, kubectl and yaml files are used to automate this tasks.
+
+```bash
+$make gke service=[FOLDER_SERVICE_NAME]
+#FOLDER_SERVICE_NAME is the name of folder localed at ./deploy/gke, you have two options servicea or serviceb
+#example
+$ make gke service=servicea
+$ make gke service=serviceb
+```
+To expose those service, you need to create a ingress. You can execut the below command for that:
+
+```bash
+kubectly apply -f ./deploy/gke/ingress/service.yaml
 
 # Guidelines
 
@@ -61,31 +150,14 @@ On the other hand, the folder structure follows the definition specified [here](
 │   │   │   ├── variables.tf
 ├── scripts /
 ├── tests /
-├── .dockerignore /
-├── .gitignore /
-├── .travis.yml /
-├── .account.json.enc /
-├── go.mod /
-├── go.sum /
-├── Makefile /
-├── README.md /
-│   ├── empty /
-│   ├── nested /
-│   │   ├── nested-a/
-│   │   │   ├── a1/
-│   │   │   │   ├── empty.js
-│   │   │   ├── a2/
-│   │   │   │   ├── a21/
-│   │   │   │   │   ├── a211/
-│   │   │   │   │   │   ├── empty.js
-│   │   │   │   │   │   ├── example.js
-│   │   ├── nested-b/
-│   │   │   ├── b1/
-│   │   │   │   ├── b11/
-│   │   │   │   │   ├── empty.js
-│   │   │   │   │   ├── empty.json
-│   │   │   │   ├── empty.js
-├── index.js
+├── .dockerignore
+├── .gitignore
+├── .travis.yml
+├── .account.json.enc
+├── go.mod
+├── go.sum
+├── Makefile
+├── README.md
 ```
 
 
