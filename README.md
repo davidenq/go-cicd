@@ -31,6 +31,7 @@ For running unit testing:
 - `docker-compose`
 - `ruby for travis cli`
 - `go > 1.12` if you want to develop without Docker
+- `brew install goreleaser`
 
 ### install travis
 ```bash
