@@ -21,3 +21,37 @@ On the other hand, the folder structure follows the definition specified [here](
 For running unit testing:
 
 `$ make unit-test`
+
+# To start to develop
+
+## Requirements
+- `Docker`
+- `docker-compose`
+- `ruby for travis cli`
+- `go > 1.12` if you want to develop without Docker
+
+### install travis
+```bash
+gem install travis
+```
+
+#### issues installing travis
+- if you get  'You don't have write permissions for the /Library/Ruby/Gems/2.6.0 directory' running the below commands:
+  ```bash
+  $ echo 'export PATH="/usr/local/opt/ruby/bin:$PATH"' >> ~/.bash_profile
+  ```
+
+  ```bash
+  $ source ~/.bash_profile
+  ```
+[source](https://stackoverflow.com/questions/51126403/you-dont-have-write-permissions-for-the-library-ruby-gems-2-3-0-directory-ma?rq=1)
+
+- if you get command not found, try:
+  ```bash
+  $ brew install travis
+  ```
+
+
+  ```bash
+  travis encrypt-file credenciales.json --add
+  ```

@@ -1,5 +1,5 @@
 #!/bin/bash
-ACTION=${a}
+ACTION=${action}
 if [ "$ACTION" == "run" ];
 then
   ENVIRONMENT=develop go run ./cmd/gocicd/index.go
