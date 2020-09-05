@@ -9,8 +9,7 @@ env:
   - CLOUDSDK_CORE_DISABLE_PROMPTS=1
 before_install:
 # security account.json
-- openssl aes-256-cbc -K $encrypted_df2253688184_key -iv $encrypted_df2253688184_iv
-  -in account.json.enc -out account.json -d
+- openssl aes-256-cbc -K $encrypted_df2253688184_key -iv $encrypted_df2253688184_iv -in account.json.enc -out account.json -d
 # installing golang dependencies
 - go get ./...
 # running unit and integration tests
