@@ -82,3 +82,6 @@ define show_error_message
 	@echo "For instance: make travis action=encrypt env="KEY:SECRET_VALUE""
 	@echo ${COLOR_NC}""
 endef
+
+gcr:
+	./deploy/gcr/deploy.sh
