@@ -30,7 +30,6 @@ before_install:
 # push docker image on gcr service
 - docker push ${CONTAINER_TAG}:${TRAVIS_COMMIT}
 script:
-- "$GOPATH/bin/goveralls -service=travis-ci"
 - gcloud config set project ${PROJECT_ID}
 - curl -sfL https://git.io/goreleaser | sh -s -- check # check goreleaser config for deprecations
 deploy:
@@ -46,3 +45,6 @@ deploy:
 after_deploy:
   - test -n "$TRAVIS_TAG" && curl -sL https://git.io/goreleaser | bash
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_TAG ; fi`
+  # end to end test
+  - make app action=e2e-test
+  - $GOPATH/bin/goveralls -service=travis-ci
