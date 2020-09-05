@@ -36,7 +36,7 @@ deploy:
   on:
     branch: master
 - provider: script
-  script: gcloud run deploy ${TRAVIS_REPO_SLUG/\//-}-${TRAVIS_BUILD_ID} --image ${CONTAINER_TAG}:${TRAVIS_COMMIT}
+  script: APP_NAME=$(CONTAINER_TAG | sed -e "s/\//-/g") && gcloud run deploy ${APP_NAME}-${TRAVIS_BUILD_ID} --image ${CONTAINER_TAG}:${TRAVIS_COMMIT}
     --region us-east1 --platform managed --allow-unauthenticated
   on:
     all_branches: true
