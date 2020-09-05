@@ -14,5 +14,10 @@ then
   go test -cover ./cmd/gocicd/interface/controllers
 elif [ "$ACTION" == "e2e-test" ];
 then
-  echo "e2e.test"
+  if [ "$TRAVIS_BRANCH" == "" ]; then
+    CURRENT_HOST=http://localhost:$PORT
+  else
+    CURRENT_HOST=$(curl -s $(gcloud run services describe go-cicd-$TRAVIS_BRANCH-$TRAVIS_BUILD_ID  --platform managed --region us-east1 --format 'value(status.url)'))
+  fi
+  HOST=$CURRENT_HOST go test -cover ./tests/end2end
 fi
