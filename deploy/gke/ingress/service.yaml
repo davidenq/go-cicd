@@ -1,0 +1,22 @@
+---
+apiVersion: "extensions/v1beta1"
+kind: "Ingress"
+metadata:
+  name: "ingress"
+  namespace: "default"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: "/"
+        backend:
+          serviceName: "servicea"
+          servicePort: 80
+    host: "servicea.davidenq.com"
+  - http:
+      paths:
+      - path: "/"
+        backend:
+          serviceName: "serviceb"
+          servicePort: 80
+    host: "serviceb.davidenq.com"
