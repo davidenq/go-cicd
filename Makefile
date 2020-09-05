@@ -56,33 +56,6 @@ else
 	ACTION={a} ./scripts/docker-compose/docker-compose.sh
 endif
 
-# Commands for Travis just for specific tasks such as login, create secrets and show a list of secrets
-travis:
-ifndef action
-	$(call show_error_message)
-endif
-	
-ifndef env
-	$(call show_error_message)
-else
-	ENVVARS=${env} ./scripts/travis/travis.sh
-endif
-
-define show_error_message
-  @echo ${COLOR_RED}""
-	@echo "Error: You must define action and env parameters as follows: make travis action=[action] env=[KEY:VALUE]"
-	@echo ${COLOR_YELLOW}""
-	@echo "[action]:login,encrypt,show"
-	@echo "[env]:KEY:SECRET_VALUE"
-	@echo ${COLOR_GREEN}""
-	@echo "  - login: you must provide github credentials to login on travis"
-	@echo "  - encrypt: for encrypting environment variables on Travis"
-	@echo "  - show: list all of the encryption values on Travis"
-	@echo ${COLOR_CYAN}""
-	@echo "For instance: make travis action=encrypt env="KEY:SECRET_VALUE""
-	@echo ${COLOR_NC}""
-endef
-
 gcr:
 	./deploy/gcr/deploy.sh
 
