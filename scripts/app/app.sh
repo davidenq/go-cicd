@@ -19,5 +19,5 @@ then
   else
     CURRENT_HOST=$(curl -s $(gcloud run services describe go-cicd-$TRAVIS_BRANCH-$TRAVIS_BUILD_ID  --platform managed --region us-east1 --format 'value(status.url)'))
   fi
-  HOST=$CURRENT_HOST go test -cover ./tests/end2end
+  HOST=$CURRENT_HOST go test ./tests/end2end
 fi
