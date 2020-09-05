@@ -85,3 +85,17 @@ endef
 
 gcr:
 	./deploy/gcr/deploy.sh
+
+infra:
+	@terraform init ./iaac/terraform/gke
+	@terraform validate dir ./iaac/terraform/gke
+	@terraform apply -var-file=./iaac/terraform/gke/cluster.tfvars ./iaac/terraform/gke
+
+gke:
+ifndef service
+	@echo ${COLOR_RED}"Error: You must define the service to deploy (a) as follows: make gke service=[SERVICE_FOLDER_NAME]"
+	@echo "For instance: make gke service=servicea"
+	@echo ${COLOR_NC}""
+else 
+	SERVICE=${service} ./scripts/gke/deploy.sh
+endif
