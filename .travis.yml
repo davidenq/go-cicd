@@ -27,7 +27,7 @@ before_install:
 # push docker image on gcr service
 - docker push ${CONTAINER_TAG}:${TRAVIS_COMMIT}
 script:
-- "$GOPATH/bin/goveralls -service=go-cicd"
+- "$GOPATH/bin/goveralls -service=travis-ci"
 - gcloud config set project ${PROJECT_ID}
 deploy:
 - provider: script
